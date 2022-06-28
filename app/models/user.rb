@@ -34,4 +34,39 @@ class User < ApplicationRecord
   def as_merchant(merchant_params)
     update(role: Merchant.new(merchant_params))
   end
+
+  def generate_token!
+    self.reset_token = generate_token
+    self.reset_token_sent_at = Time.now
+    save!
+  end
+  
+  def token_valid?
+    (self.reset_token_sent_at + 4.hours.to_i) > Time.now
+  end
+  
+  def reset_password!(password)
+    self.reset_token = nil
+    self.password = password
+    save!
+  end
+  
+  def update_new_email!(email)
+    self.email = email
+    self.reset_token = nil
+    save
+  end
+  
+  def self.email_used?(email)
+    if User.where(email: email).any?
+      return true
+    end
+  end
+
+  private
+  
+  def generate_token
+    SecureRandom.hex(10)
+  end
+  
 end
