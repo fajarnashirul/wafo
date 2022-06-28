@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     post :login, to: 'authentication#login'
   end
 
-  resources :users, param: :username, only: %i[index show] do
+  resources :users, param: :username, only: %i[index show update] do
     post :roles, param: :username, to: 'users#add_role'
   end
 
@@ -17,5 +17,14 @@ Rails.application.routes.draw do
     end
   end
 
+  scope :user do
+    post '/password/forgot', to: 'passwords#forgot'
+    post '/password/reset', to: 'passwords#reset'
+    put '/password/update', to: 'passwords#update'
+    post '/email/update', to: 'emails#update'
+    post '/email/new', to: 'emails#new'
+  end
+
   get '/*a', to: 'application#not_found'
+
 end
