@@ -23,25 +23,35 @@ default: &default
 
 development:
   <<: *default
+
+  
   database: wafo_development
+  
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  username: <%= ENV["DB_USERNAME"] %>
+# <<<<<<< Updated upstream
+#   username: <%= ENV["DB_USERNAME"] %>
+
+#   # The password associated with the postgres role (username).
+#   password: <%= ENV["DB_PASSWORD"] %>
+# =======
+  username: postgres
 
   # The password associated with the postgres role (username).
-  password: <%= ENV["DB_PASSWORD"] %>
+  password: root
+# >>>>>>> Stashed changes
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  host: <%= ENV["DB_HOST"] %>
+  host: localhost
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
-  port: <%= ENV["DB_PORT"] %>
+  port: 5432
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public
@@ -66,7 +76,7 @@ test:
 # Instead, provide the password or a full connection URL as an environment
 # variable when you boot the app. For example:
 #
-#   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
+# DATABASE_URL="postgres://posgres:root@localhost/wafo_test"
 #
 # If the connection URL is provided in the special DATABASE_URL environment
 # variable, Rails will automatically merge its configuration values on top of
